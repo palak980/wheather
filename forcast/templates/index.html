@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #F1853A;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #CA3619;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #802037;
+        }
+
+        .weather-info {
+            font-size: 20px;
+            margin-top: 20px;
+            font-color: #802037;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+
+        <form method="post" action="{% url 'weather_dashboard' %}">
+            {% csrf_token %}
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather_data %}
+            <!-- Display city information -->
+            <div class="city-info">
+                <p>City: {{ weather_data.name }}, {{ weather_data.sys.country }}</p>
+            </div>
+
+            <!-- Display weather information here -->
+            <div class="weather-info">
+                <p>Temperature: {{ weather_data.main.temp }}&deg;C</p>
+                <p>Humidity: {{ weather_data.main.humidity }}%</p>
+                <!-- Add more details as needed -->
+            </div>
+        {% endif %}
+        
+    </div>
+</body>
+
+</html>
